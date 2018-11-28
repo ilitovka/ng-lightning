@@ -1,6 +1,6 @@
 {
   "name": "ng-lightning",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Native Angular components and directives for Lightning Design System",
   "repository": {
     "type": "git",

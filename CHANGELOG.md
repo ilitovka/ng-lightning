@@ -1,3 +1,27 @@
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/ng-lightning/ng-lightning/compare/v2.0.1...v3.0.0) (2018-11-28)
+
+
+### Bug Fixes
+
+* **app:** lock Tether version to prevent production build errors ([ed15887](https://github.com/ng-lightning/ng-lightning/commit/ed15887))
+* **datepicker:** add missing label on year to improve accessibility ([bfc364b](https://github.com/ng-lightning/ng-lightning/commit/bfc364b)), closes [#388](https://github.com/ng-lightning/ng-lightning/issues/388)
+* **lookups:** prevent form submission on polymprhic selection ([78181d7](https://github.com/ng-lightning/ng-lightning/commit/78181d7)), closes [#350](https://github.com/ng-lightning/ng-lightning/issues/350)
+* **lookups:** turn autocomplete off for input ([7ce34b2](https://github.com/ng-lightning/ng-lightning/commit/7ce34b2)), closes [#348](https://github.com/ng-lightning/ng-lightning/issues/348)
+
+
+### Features
+
+* **app:** support Angular v5 ([3008ded](https://github.com/ng-lightning/ng-lightning/commit/3008ded))
+* **forms:** add tooltip help ([b06890f](https://github.com/ng-lightning/ng-lightning/commit/b06890f)), closes [#374](https://github.com/ng-lightning/ng-lightning/issues/374)
+
+
+### BREAKING CHANGES
+
+* **app:** ng-lightning requires a minimal version of Angular 5
+
+
+
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/ng-lightning/ng-lightning/compare/v2.0.0...v2.0.1) (2017-08-17)
 
