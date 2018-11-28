@@ -1,3 +1,4 @@
+label.slds-assistive-text([attr.for]="uid") Pick a Year
 .slds-select_container
-  select.slds-select([ngModel]="year", (ngModelChange)="change($event)")
+  select.slds-select([id]="uid", [ngModel]="year", (ngModelChange)="change($event)")
     option(*ngFor="let yr of range", [value]="yr") {{yr}}

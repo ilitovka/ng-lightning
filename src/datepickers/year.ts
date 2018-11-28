@@ -1,4 +1,5 @@
 import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import { uniqueId } from '../util/util';
 
 @Component({
   selector: 'ngl-date-year',
@@ -6,6 +7,8 @@ import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NglDatepickerYear {
+
+  uid = uniqueId('datepicker_year');
 
   // How many years before and after the current one are selectable in dropdown
   @Input() numYearsBefore: number = 100;
