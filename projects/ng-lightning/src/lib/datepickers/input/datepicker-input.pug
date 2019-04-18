@@ -1,0 +1,23 @@
+label.slds-form-element__label(*ngIf="label", [attr.for]="uid", [nglInternalOutlet]="label")
+
+.slds-form-element__control.slds-input-has-icon.slds-input-has-icon_right()
+  input.slds-input(#inputEl, [id]="uid",
+                   type="text",
+                   autocomplete="off",
+                   [placeholder]="placeholder",
+                   [disabled]="disabled",
+                   [readOnly]="readonlyInput",
+                   (keydown)="onKeyboardInput($event)",
+                   (input)="onInput($event.target.value)",
+                   (blur)="onBlur()")
+  button.slds-button.slds-button_icon.slds-input__icon.slds-input__icon_right(type="button",
+                                                                              title="Select a date",
+                                                                              [disabled]="disabled",
+                                                                              (click)="openCalendar()")
+    svg.slds-button__icon(nglIconName="utility:event")
+    span.slds-assistive-text Select a date
+
+ngl-datepicker.slds-dropdown.slds-dropdown_left(#popupEl,
+                                                [attr.aria-hidden]="!open",
+                                                [date]="date",
+                                                (dateChange)="pickerSelection($event)")

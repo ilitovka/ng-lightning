@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChildren, QueryList, NgZone } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChildren, QueryList, NgZone, ElementRef } from '@angular/core';
 import { ENTER, UP_ARROW, LEFT_ARROW, DOWN_ARROW, RIGHT_ARROW, PAGE_UP, PAGE_DOWN, HOME, END } from '@angular/cdk/keycodes';
 import { take } from 'rxjs/operators';
 import { uniqueId, trapEvent } from '../util/util';
@@ -57,7 +57,7 @@ export class NglDatepicker {
 
   @ViewChildren(NglDay) days: QueryList<NglDay>;
 
-  constructor(private ngZone: NgZone) {}
+  constructor(public element: ElementRef, private ngZone: NgZone) {}
 
   moveYear(year: string | number) {
     this.current.year = +year;
@@ -121,7 +121,7 @@ export class NglDatepicker {
     return this.isEqualDate(date, this.today);
   }
 
-  private focusActiveDay() {
+  focusActiveDay() {
     this.ngZone.runOutsideAngular(() => {
       this.ngZone.onStable.asObservable().pipe(take(1)).subscribe(() => {
         const active = this.days.find((d) => this.isActive(d.date));

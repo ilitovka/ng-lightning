@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { NglModule } from 'ng-lightning';
 import { NglDemoExampleModule } from 'src/app/example/example.module';
@@ -8,6 +9,10 @@ import { DemoDatepickersComponent } from './datepickers.component';
 
 // Examples
 import { DemoDatepickersBasic } from './examples/basic';
+import { DemoDatepickersDisabled } from './examples/disabled';
+import { DemoDatepickersInput } from './examples/input';
+import { DemoDatepickersFormat } from './examples/format';
+import { DemoDatepickersValidation } from './examples/validation';
 
 const routes: Routes = [
   { path: '', component: DemoDatepickersComponent },
@@ -16,6 +21,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule, ReactiveFormsModule,
     RouterModule.forChild(routes),
     NglModule,
     NglDemoExampleModule,
@@ -23,6 +29,10 @@ const routes: Routes = [
   declarations: [
     DemoDatepickersComponent,
     DemoDatepickersBasic,
+    DemoDatepickersDisabled,
+    DemoDatepickersFormat,
+    DemoDatepickersInput,
+    DemoDatepickersValidation,
   ],
 })
 export class NglDemoDatepickersModule {}
