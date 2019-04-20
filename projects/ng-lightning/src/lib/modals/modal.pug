@@ -1,4 +1,5 @@
-section.slds-modal([ngClass]="modalClass()",
+section.slds-modal(#modalContainer,
+                  [ngClass]="modalClass()",
                    [attr.aria-hidden]="!open", [attr.aria-labelledby]="headingId", [attr.aria-describedby]="contentId"
                    aria-modal="true", [attr.role]="prompt ? 'alertdialog' : 'dialog'", tabindex="-1")
   .slds-modal__container

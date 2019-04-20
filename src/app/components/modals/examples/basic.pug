@@ -6,6 +6,9 @@ ngl-modal([header]="noHeader ? '' : 'Modal Header'", [(open)]="opened", [size]="
     | .
   |
   .slds-p-around_medium
+
+
+    ngl-datepicker-input(label="Date", [(value)]="value")
     p
       | Sit nulla est ex deserunt exercitation anim occaecat. Tempor cupidatat consequat elit dolor adipisicing.
     |
@@ -13,6 +16,14 @@ ngl-modal([header]="noHeader ? '' : 'Modal Header'", [(open)]="opened", [size]="
     |
     p
       | Labore esse esse cupidatat amet velit id elit consequat minim ullamco mollit enim excepteur ea.
+    p
+      | Sit nulla est ex deserunt exercitation anim occaecat. Tempor cupidatat consequat elit dolor adipisicing.
+    |
+    p Dolor eiusmod sunt ex incididunt cillum quis nostrud velit duis sit officia.
+    |
+    p
+      | Labore esse esse cupidatat amet velit id elit consequat minim ullamco mollit enim excepteur ea.
+
   |
   ng-template(nglModalFooter, *ngIf="!noFooter")
     button.slds-button.slds-button_neutral((click)="cancel()") Cancel

@@ -22,5 +22,6 @@ const EXPORTS = [
   exports: EXPORTS,
   imports: [CommonModule, FormsModule, NglIconsModule, NglInternalOutletModule],
   providers: [NglDateAdapter],
+  entryComponents: [NglDatepicker],
 })
 export class NglDatepickersModule {}

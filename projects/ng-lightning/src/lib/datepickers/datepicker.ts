@@ -24,6 +24,7 @@ const KEYBOARD_MOVES = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.slds-datepicker]': 'true',
+    '[class.slds-dropdown]': 'true',
   },
   styles: [`:host { display: block; }`],
 })

@@ -8,6 +8,7 @@ export class DemoModalsBasic {
 
   opened = false;
   size = '';
+  value = '2010/09/30';
 
   noHeader = false;
   hasTagline = false;

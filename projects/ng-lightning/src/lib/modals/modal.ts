@@ -1,5 +1,5 @@
 import { Component, Input, Output, ElementRef, EventEmitter, HostListener, ContentChild,
-         ChangeDetectionStrategy, Inject, OnChanges, SimpleChanges, AfterContentInit, OnDestroy } from '@angular/core';
+         ChangeDetectionStrategy, Inject, OnChanges, SimpleChanges, AfterContentInit, OnDestroy, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';
 import { BlockScrollStrategy, ViewportRuler } from '@angular/cdk/overlay';
@@ -7,6 +7,7 @@ import { uniqueId } from '../util/util';
 import { InputBoolean } from '../util/convert';
 import { NglModalHeaderTemplate, NglModalTaglineTemplate, NglModalFooterTemplate } from './templates';
 import { hasObservers } from '../util/hasObservers';
+import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 
 @Component({
   selector: 'ngl-modal',
@@ -40,6 +41,8 @@ export class NglModal implements OnChanges, AfterContentInit, OnDestroy {
 
   @ContentChild(NglModalFooterTemplate) footer: NglModalFooterTemplate;
 
+  @ViewChild('modalContainer') modalContainer: ElementRef;
+
   @Input() @InputBoolean() dismissOnClickOutside = true;
 
   @Input() prompt: 'success' | 'warning' | 'error' | 'wrench' | 'offline' | 'info';
@@ -54,7 +57,7 @@ export class NglModal implements OnChanges, AfterContentInit, OnDestroy {
 
   private scrollStrategy: BlockScrollStrategy;
 
-  constructor(private focusTrapFactory: FocusTrapFactory, viewportRuler: ViewportRuler, @Inject(DOCUMENT) private document: any, private element: ElementRef) {
+  constructor(private focusTrapFactory: FocusTrapFactory, viewportRuler: ViewportRuler, @Inject(DOCUMENT) private document: any, public element: ElementRef) {
     this.scrollStrategy = new BlockScrollStrategy(viewportRuler, document);
   }
 
@@ -123,7 +126,8 @@ export class NglModal implements OnChanges, AfterContentInit, OnDestroy {
 
       this.focusTrap = this.focusTrapFactory.create(this.element.nativeElement);
       this.focusTrap.focusInitialElementWhenReady();
-      this.scrollStrategy.enable();
+      disableBodyScroll(undefined, { reserveScrollBarGap: true });
+      // this.scrollStrategy.enable();
     } else {
       if (this.elementFocusedBeforeDialogWasOpened && typeof this.elementFocusedBeforeDialogWasOpened.focus === 'function') {
         this.elementFocusedBeforeDialogWasOpened.focus();
@@ -131,7 +135,8 @@ export class NglModal implements OnChanges, AfterContentInit, OnDestroy {
       if (this.focusTrap) {
         this.focusTrap.destroy();
       }
-      this.scrollStrategy.disable();
+      enableBodyScroll();
+      // this.scrollStrategy.disable();
     }
   }
 }

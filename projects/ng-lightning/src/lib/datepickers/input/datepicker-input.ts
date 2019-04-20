@@ -1,6 +1,7 @@
 import { Component, Input, ChangeDetectionStrategy, ElementRef, Renderer2, TemplateRef,
          forwardRef, ChangeDetectorRef, HostBinding, Output, EventEmitter, HostListener,
-         ViewChild, OnInit, Inject, OnChanges, SimpleChanges } from '@angular/core';
+         ViewChild, OnInit, Inject, OnChanges, SimpleChanges, ViewContainerRef,
+         ComponentFactoryResolver, ApplicationRef, Injector, ComponentRef, Optional, OnDestroy } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import { uniqueId, trapEvent } from '../../util/util';
@@ -13,6 +14,9 @@ import { NglDatepicker } from '../datepicker';
 import { listenOutsideClicks } from '../../util/outside-click';
 import { NglDateAdapter } from '../adapters/date-fns-adapter';
 import Popper from 'popper.js';
+import { DomPortalHost, TemplatePortal, ComponentPortal } from '@angular/cdk/portal';
+import { NglModal } from '../../modals/modal';
+import { takeUntil, filter, take } from 'rxjs/operators';
 
 const NGL_DATEPICKER_INPUT_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -26,7 +30,7 @@ const NGL_DATEPICKER_INPUT_VALUE_ACCESSOR = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [NGL_DATEPICKER_INPUT_VALUE_ACCESSOR, HostService],
 })
-export class NglDatepickerInput implements ControlValueAccessor, OnInit, OnChanges {
+export class NglDatepickerInput implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
 
   /**
    * Label that appears above the Slider.
@@ -38,6 +42,8 @@ export class NglDatepickerInput implements ControlValueAccessor, OnInit, OnChang
   @Input() format = 'big-endian';
 
   @Input() delimiter = '/';
+
+  @ViewChild('templatePortalContent') templatePortalContent: TemplateRef<any>;
 
   /**
    * Whether the slider is disabled.
@@ -52,6 +58,8 @@ export class NglDatepickerInput implements ControlValueAccessor, OnInit, OnChang
    * Message to display when there is in an error state.
    */
   @Input() @InputBoolean() error: boolean;
+  templatePortal: TemplatePortal<any>;
+  loadingSpinnerPortal: any;
 
   @HostBinding('class.slds-has-error')
   get hasError() {
@@ -78,9 +86,11 @@ export class NglDatepickerInput implements ControlValueAccessor, OnInit, OnChang
 
   @ViewChild('inputEl') inputEl: ElementRef;
 
-  @ViewChild('popupEl') datepicker: NglDatepicker;
+  datepicker: NglDatepicker;
 
   uid = uniqueId('datepicker-input');
+
+  private bodyPortalHost: DomPortalHost;
 
   private popperInstance: Popper;
 
@@ -106,6 +116,11 @@ export class NglDatepickerInput implements ControlValueAccessor, OnInit, OnChang
   constructor(private element: ElementRef, private renderer: Renderer2,
               private cd: ChangeDetectorRef, private hostService: HostService,
               private adapter: NglDateAdapter, @Inject(DOCUMENT) private document: any,
+    @Optional() private nglModal: NglModal,
+    private _viewContainerRef: ViewContainerRef,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private appRef: ApplicationRef,
+    private injector: Injector,
               private focusTrapFactory: FocusTrapFactory) {
     this.renderer.addClass(this.element.nativeElement, 'slds-form-element');
     this.renderer.addClass(this.element.nativeElement, 'slds-dropdown-trigger');
@@ -138,17 +153,21 @@ export class NglDatepickerInput implements ControlValueAccessor, OnInit, OnChang
       this.cd.markForCheck();
     });
 
-    listenOutsideClicks(this.document, this.datepicker.element.nativeElement, this._open).subscribe((close: boolean) => {
-      if (close) {
-        this.closeCalendar(false);
-      }
-    });
+    this.bodyPortalHost = new DomPortalHost(
+      this.nglModal ? this.nglModal.modalContainer.nativeElement : document.body,
+      this.componentFactoryResolver,
+      this.appRef,
+      this.injector);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.format || changes.delimiter) {
       this.getPattern();
     }
+  }
+
+  ngOnDestroy() {
+    this.closeCalendar();
   }
 
   @HostListener('keydown', ['$event'])
@@ -177,22 +196,51 @@ export class NglDatepickerInput implements ControlValueAccessor, OnInit, OnChang
   openCalendar() {
     if (this.open) return;
 
-    this.createPopper();
+    this.loadingSpinnerPortal = new ComponentPortal(NglDatepicker);
+
+    const x: ComponentRef<NglDatepicker> = this.bodyPortalHost.attach(this.loadingSpinnerPortal);
+    this.datepicker = x.instance;
+    this.datepicker._date = this.date;
+    this.datepicker.dateChange.subscribe(($event) => {
+      console.log('here', $event);
+      this.pickerSelection($event);
+    });
+
+    const datepickerEl = this.datepicker.element.nativeElement;
+
+    listenOutsideClicks(this.document, datepickerEl, this._open).pipe(take(1)).subscribe((close: boolean) => {
+      if (close) {
+        this.closeCalendar(false);
+      }
+    });
 
     this.open = true;
 
-    this.focusTrap = this.focusTrapFactory.create(this.datepicker.element.nativeElement);
+    console.log('date', this.datepicker);
+    this.createPopper();
+
+    this.focusTrap = this.focusTrapFactory.create(datepickerEl);
     this.datepicker.focusActiveDay();
   }
 
   createPopper() {
     const reference = this.inputEl.nativeElement;
     const popper = this.datepicker.element.nativeElement;
+
+    const modifiers: any = {
+      preventOverflow: { boundariesElement: 'scrollParent', escapeWithReference: true },
+      hide: { enabled: true },
+      removeOnDestroy: true,
+    };
+    console.log(modifiers);
+
     this.popperInstance = new Popper(reference, popper, {
       placement: this.align === 'left' ? 'bottom-start' : 'bottom-end',
       // eventsEnabled,
-      // modifiers,
+      modifiers,
     });
+
+    this.popperInstance.scheduleUpdate();
   }
 
   closeCalendar(focusInput = true) {
@@ -207,6 +255,8 @@ export class NglDatepickerInput implements ControlValueAccessor, OnInit, OnChang
     if (this.focusTrap) {
       this.focusTrap.destroy();
     }
+
+    this.bodyPortalHost.detach();
 
     if (focusInput) {
       this.inputEl.nativeElement.focus();

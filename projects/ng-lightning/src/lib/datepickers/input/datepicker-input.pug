@@ -17,7 +17,8 @@ label.slds-form-element__label(*ngIf="label", [attr.for]="uid", [nglInternalOutl
     svg.slds-button__icon(nglIconName="utility:event")
     span.slds-assistive-text Select a date
 
-ngl-datepicker.slds-dropdown.slds-dropdown_left(#popupEl,
+ng-template(#templatePortalContent)
+  ngl-datepicker.slds-dropdown.slds-dropdown_left(#popupEl,
                                                 [attr.aria-hidden]="!open",
                                                 [date]="date",
                                                 (dateChange)="pickerSelection($event)")
