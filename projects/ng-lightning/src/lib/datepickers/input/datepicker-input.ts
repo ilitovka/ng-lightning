@@ -3,7 +3,7 @@ import { Component, Input, ChangeDetectionStrategy, ElementRef, Renderer2, Templ
          ViewChild, OnInit, Inject, OnChanges, SimpleChanges } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
-import { uniqueId } from '../../util/util';
+import { uniqueId, trapEvent } from '../../util/util';
 import { InputBoolean } from '../../util/convert';
 import { HostService } from '../../common/host/host.service';
 import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';
@@ -12,6 +12,7 @@ import { BehaviorSubject } from 'rxjs';
 import { NglDatepicker } from '../datepicker';
 import { listenOutsideClicks } from '../../util/outside-click';
 import { NglDateAdapter } from '../adapters/date-fns-adapter';
+import Popper from 'popper.js';
 
 const NGL_DATEPICKER_INPUT_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -44,6 +45,8 @@ export class NglDatepickerInput implements ControlValueAccessor, OnInit, OnChang
   @Input() @InputBoolean() disabled: boolean;
 
   @Input() @InputBoolean() readonlyInput = false;
+
+  @Input() align: 'left' | 'right' = 'left';
 
   /**
    * Message to display when there is in an error state.
@@ -78,6 +81,8 @@ export class NglDatepickerInput implements ControlValueAccessor, OnInit, OnChang
   @ViewChild('popupEl') datepicker: NglDatepicker;
 
   uid = uniqueId('datepicker-input');
+
+  private popperInstance: Popper;
 
   private pattern: string;
 
@@ -159,6 +164,7 @@ export class NglDatepickerInput implements ControlValueAccessor, OnInit, OnChang
     const keyCode = evt.keyCode;
 
     if (!this.open && (keyCode === DOWN_ARROW || keyCode === UP_ARROW)) {
+      trapEvent(evt);
       this.openCalendar();
     }
   }
@@ -171,14 +177,33 @@ export class NglDatepickerInput implements ControlValueAccessor, OnInit, OnChang
   openCalendar() {
     if (this.open) return;
 
+    this.createPopper();
+
     this.open = true;
 
     this.focusTrap = this.focusTrapFactory.create(this.datepicker.element.nativeElement);
     this.datepicker.focusActiveDay();
   }
 
+  createPopper() {
+    const reference = this.inputEl.nativeElement;
+    const popper = this.datepicker.element.nativeElement;
+    this.popperInstance = new Popper(reference, popper, {
+      placement: this.align === 'left' ? 'bottom-start' : 'bottom-end',
+      // eventsEnabled,
+      // modifiers,
+    });
+  }
+
   closeCalendar(focusInput = true) {
     this.open = false;
+
+    if (this.popperInstance) {
+      this.popperInstance.disableEventListeners();
+      this.popperInstance.destroy();
+      this.popperInstance = null;
+    }
+
     if (this.focusTrap) {
       this.focusTrap.destroy();
     }
