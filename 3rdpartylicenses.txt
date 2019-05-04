@@ -116,6 +116,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
+date-fns
+MIT
+# License
+
+date-fns is licensed under the [MIT license](http://kossnocorp.mit-license.org).
+Read more about MIT at [TLDRLegal](https://tldrlegal.com/license/mit-license).
+
+
 ng-lightning
 MIT
 
@@ -349,6 +357,8 @@ Apache-2.0
  limitations under the License.
  
 
+
+undefined
 
 tslib
 Apache-2.0
