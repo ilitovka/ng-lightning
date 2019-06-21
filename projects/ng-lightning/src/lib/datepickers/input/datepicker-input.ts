@@ -114,6 +114,11 @@ export class NglDatepickerInput implements ControlValueAccessor, Validator, OnIn
   @Input() readonly max: Date;
 
   /**
+   * Text for button to open calendar.
+   */
+  @Input() readonly selectDateLabel = 'Select a date';
+
+  /**
    * Datepicker inputs
    */
   @Input() monthNames: string[];

@@ -15,11 +15,11 @@ label.slds-form-element__label(*ngIf="label", [attr.for]="uid", [nglInternalOutl
                    (input)="onInputChange($event.target.value)",
                    (blur)="onBlur()")
   button.slds-button.slds-button_icon.slds-input__icon.slds-input__icon_right(type="button",
-                                                                              title="Select a date",
+                                                                              [title]="selectDateLabel",
                                                                               [disabled]="disabled",
                                                                               (click)="onTriggerClick('button')")
     svg.slds-button__icon(nglIconName="utility:event")
-    span.slds-assistive-text Select a date
+    span.slds-assistive-text {{ selectDateLabel }}
 
 ng-template(cdkConnectedOverlay,
             #cdkOverlay="cdkConnectedOverlay",

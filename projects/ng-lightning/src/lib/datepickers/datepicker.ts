@@ -65,6 +65,22 @@ export class NglDatepicker implements OnInit, OnChanges, AfterViewInit {
    */
   @Input() readonly max: Date;
 
+  /**
+   * Label of shortcut to select current date.
+   */
+  @Input() readonly todayLabel = 'Today';
+
+  /**
+   * Label for button to go to the previous month.
+   */
+  @Input() readonly previousMonthLabel = 'Previous Month';
+
+  /**
+   * Label for button to go to the next month.
+   */
+  @Input() readonly nextMonthLabel = 'Next Month';
+
+
   weeks: NglInternalDate[];
   uid = uniqueId('datepicker');
   monthLabel: string;

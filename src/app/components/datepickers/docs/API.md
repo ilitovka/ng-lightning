@@ -13,6 +13,9 @@
 | `[max]` | Maximum selectable date. It will override `relativeYearTo` if defined. | Date | |
 | `[relativeYearFrom]` | Offset of year from current year, that can be the minimum option in the year selection dropdown. For example, 2019 - 100 = 1/1/1019 is minimum selectable date. | number | -100 |
 | `[relativeYearTo]` | Offset of year from current year, that can be the maximum option in the year selection dropdown. For example, 2019 + 10 = 31/12/2029 is maximum selectable date. | number | 10 |
+| `[todayLabel]` | Label of shortcut to select current date. | string | 'Today' |
+| `[previousMonthLabel]` | Label for button to go to the previous month. | string | 'Previous Month' |
+| `[nextMonthLabel]` | Label for button to go to the next month. | string | 'Next Month' |
 | `(dateChange)` | Emits date upon selection. | EventEmitter<Date> | |
 
 
@@ -31,6 +34,7 @@ Also supports `[(ngModel)]` and `[formControl]`, instead of `[(value)]`.
 | `[disabled]` | Disable input and calendar. | boolean | false |
 | `[readonlyInput]` | Whether input is readonly and calendar is available for date selection. | boolean | false |
 | `[openOnInputClick]` | Whether to open the datepicker when a mouse user clicks on the input. | boolean | true |
+| `[selectDateLabel]` | Text for button to open calendar. | string | 'Select a date' |
 | `(valueChange)` | Emits the selected date. | EventEmitter<Date> | |
 
 You can also use all the `<ngl-datepicker>` inputs, that will be proxied to to popup calendar.

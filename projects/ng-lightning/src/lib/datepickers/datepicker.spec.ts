@@ -135,6 +135,9 @@ describe('`Datepicker` Component', () => {
     ], 'September', '2010').then(() => {
       expect(getDayHeaders(fixture.nativeElement)).toEqual([ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ]);
       expectYearOptions(fixture.nativeElement, 1905, 2015);
+
+      expect(getNextButton(fixture.nativeElement).getAttribute('title')).toEqual('Next Month');
+      expect(getPreviousButton(fixture.nativeElement).getAttribute('title')).toEqual('Previous Month');
     });
   }));
 
@@ -378,6 +381,9 @@ describe('`Datepicker` Component', () => {
     fixture.detectChanges();
 
     const todayEl = getTodayButton(fixture);
+
+    expect(todayEl.textContent).toEqual('Today');
+
     expect(fixture.componentInstance.dateChange).not.toHaveBeenCalled();
     todayEl.click();
     expect(fixture.componentInstance.dateChange).toHaveBeenCalledWith(currentDate);
