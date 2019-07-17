@@ -41,6 +41,8 @@ MIT
 @salesforce-ux/design-system
 SEE LICENSE IN README.md
 
+undefined
+
 @stackblitz/sdk
 MIT
 MIT License
@@ -357,8 +359,6 @@ Apache-2.0
  limitations under the License.
  
 
-
-undefined
 
 tslib
 Apache-2.0
