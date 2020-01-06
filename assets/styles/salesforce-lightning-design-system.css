@@ -1,4 +1,4 @@
-/*! Lightning Design System 2.9.2 */
+/*! Lightning Design System 2.9.4 */
 @charset "UTF-8";
 /* stylelint-disable declaration-no-important */
 @font-face {
@@ -256,6 +256,10 @@ html {
 body {
   font-size: 0.8125rem;
   background: transparent; }
+
+@media (pointer: coarse) and (hover: none) {
+  body {
+    font-size: 1rem; } }
 
 h1,
 h2,
@@ -2166,7 +2170,7 @@ a.slds-button--inverse:focus {
  * @summary Input field for summary UI
  *
  * @selector .slds-color-picker__summary-input
- * @restrict .slds-color-picker__summary > div
+ * @restrict .slds-color-picker__summary div
  */
 .slds-color-picker__summary-input {
   display: inline-block; }
@@ -22506,7 +22510,16 @@ a.slds-button--inverse:focus {
     letter-spacing: 0.0625rem;
     display: block;
     padding-bottom: 0.25rem;
-    content: attr(data-label); }
+    content: attr(data-label); } }
+
+@media (max-width: 48em) and (pointer: coarse) and (hover: none) {
+  .slds-max-medium-table_stacked th:before,
+  .slds-max-medium-table_stacked td:before,
+  .slds-max-medium-table--stacked th:before,
+  .slds-max-medium-table--stacked td:before {
+    font-size: 0.875rem; } }
+
+@media (max-width: 48em) {
   .slds-max-medium-table_stacked tr > td:first-child,
   .slds-max-medium-table_stacked tr > td:last-child,
   .slds-max-medium-table--stacked tr > td:first-child,
@@ -22596,7 +22609,16 @@ a.slds-button--inverse:focus {
     letter-spacing: 0.0625rem;
     display: block;
     padding-bottom: 0.25rem;
-    content: attr(data-label); }
+    content: attr(data-label); } }
+
+@media (max-width: 48em) and (pointer: coarse) and (hover: none) {
+  .slds-max-medium-table_stacked-horizontal th:before,
+  .slds-max-medium-table_stacked-horizontal td:before,
+  .slds-max-medium-table--stacked-horizontal th:before,
+  .slds-max-medium-table--stacked-horizontal td:before {
+    font-size: 0.875rem; } }
+
+@media (max-width: 48em) {
   .slds-max-medium-table_stacked-horizontal tr > td:first-child,
   .slds-max-medium-table_stacked-horizontal tr > td:last-child,
   .slds-max-medium-table--stacked-horizontal tr > td:first-child,
@@ -23479,6 +23501,11 @@ a.slds-button--inverse:focus {
   letter-spacing: 0.0625rem;
   padding: 0.5rem 1rem;
   background: #f3f2f2; }
+
+@media (pointer: coarse) and (hover: none) {
+  .slds-section-title_divider,
+  .slds-section-title--divider {
+    font-size: 0.875rem; } }
 
 /**
  *
@@ -27591,6 +27618,11 @@ a.slds-button--inverse:focus {
 .slds-text-body--regular {
   font-size: 0.8125rem; }
 
+@media (pointer: coarse) and (hover: none) {
+  .slds-text-body_regular,
+  .slds-text-body--regular {
+    font-size: 1rem; } }
+
 /**
  * @summary Creates a more pale-colored 12px copy
  *
@@ -27600,6 +27632,11 @@ a.slds-button--inverse:focus {
 .slds-text-body_small,
 .slds-text-body--small {
   font-size: 0.75rem; }
+
+@media (pointer: coarse) and (hover: none) {
+  .slds-text-body_small,
+  .slds-text-body--small {
+    font-size: 0.875rem; } }
 
 /**
  * @summary Very large 28px heading
@@ -27613,6 +27650,11 @@ a.slds-button--inverse:focus {
   font-size: 1.75rem;
   line-height: 1.25; }
 
+@media (pointer: coarse) and (hover: none) {
+  .slds-text-heading_large,
+  .slds-text-heading--large {
+    font-size: 2rem; } }
+
 /**
  * @summary Large 20px heading
  *
@@ -27625,6 +27667,11 @@ a.slds-button--inverse:focus {
   font-size: 1.25rem;
   line-height: 1.25; }
 
+@media (pointer: coarse) and (hover: none) {
+  .slds-text-heading_medium,
+  .slds-text-heading--medium {
+    font-size: 1.5rem; } }
+
 /**
  * @summary Smaller 16px heading
  *
@@ -27636,6 +27683,11 @@ a.slds-button--inverse:focus {
   font-size: 1rem;
   line-height: 1.25; }
 
+@media (pointer: coarse) and (hover: none) {
+  .slds-text-heading_small,
+  .slds-text-heading--small {
+    font-size: 1.25rem; } }
+
 .slds-text-heading_label,
 .slds-text-heading--label {
   font-size: 0.75rem;
@@ -27645,11 +27697,21 @@ a.slds-button--inverse:focus {
   letter-spacing: 0.0625rem;
   font-weight: 400; }
 
+@media (pointer: coarse) and (hover: none) {
+  .slds-text-heading_label,
+  .slds-text-heading--label {
+    font-size: 0.875rem; } }
+
 .slds-text-heading_label-normal,
 .slds-text-heading--label-normal {
   font-size: 0.75rem;
   line-height: 1.25;
   color: #3e3e3c; }
+
+@media (pointer: coarse) and (hover: none) {
+  .slds-text-heading_label-normal,
+  .slds-text-heading--label-normal {
+    font-size: 0.875rem; } }
 
 /**
  * @summary 12px heading that is not all caps
@@ -27662,6 +27724,10 @@ a.slds-button--inverse:focus {
   font-size: 0.75rem;
   line-height: 1.25;
   color: #3e3e3c; }
+
+@media (pointer: coarse) and (hover: none) {
+  .slds-text-title {
+    font-size: 0.875rem; } }
 
 /**
  * @summary All caps 12px heading
@@ -27678,6 +27744,11 @@ a.slds-button--inverse:focus {
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.0625rem; }
+
+@media (pointer: coarse) and (hover: none) {
+  .slds-text-title_caps,
+  .slds-text-title--caps {
+    font-size: 0.875rem; } }
 
 /**
  * @summary Bold 14px heading
