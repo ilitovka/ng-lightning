@@ -1,4 +1,4 @@
-/*! Lightning Design System 2.9.4 */
+/*! Lightning Design System 2.9.5 */
 @charset "UTF-8";
 /* stylelint-disable declaration-no-important */
 @font-face {
@@ -18419,6 +18419,16 @@ a.slds-button--inverse:focus {
 .slds-rich-text-editor__textarea blockquote,
 .slds-rich-text-editor__output blockquote {
   margin: 2rem 1.5rem; }
+
+.slds-rich-text-editor__textarea ins,
+.slds-rich-text-editor__output ins {
+  color: #027e46;
+  text-decoration: underline; }
+
+.slds-rich-text-editor__textarea del,
+.slds-rich-text-editor__output del {
+  color: #c23934;
+  text-decoration: line-through; }
 
 .slds-rich-text-editor__textarea ul,
 .slds-rich-text-editor__output ul {
